@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+from frozen_path import app_path
 
 def get_all_models(alt_model_path=None):
     """
@@ -10,7 +11,7 @@ def get_all_models(alt_model_path=None):
     if alt_model_path:
         model_dir = alt_model_path
     else:
-        model_dir = Path(__file__).parent / 'pretrained'
+        model_dir = Path(app_path()) / 'pretrained'
     models = list(sorted(model_dir.glob('*'), reverse=True))
 
     #assert len(models) > 0, "No models are available, you can maually download a model with download command or just run inference to download the latest one automatically"
@@ -27,7 +28,7 @@ def get_model_path(model_name, alt_model_path=None):
     if alt_model_path:
         model_dir = alt_model_path
     else:
-        model_dir = Path(__file__).parent / 'pretrained'
+        model_dir = Path(app_path()) / 'pretrained'
 
     resolved_model_name = resolve_model_name(model_name)
 
@@ -48,7 +49,7 @@ def copy_model(src_model_name, tgt_model_name):
     src_model_path = get_model_path(src_model_name)
 
     # verify the target path is empty
-    model_dir = Path(__file__).parent / 'pretrained'
+    model_dir = Path(app_path()) / 'pretrained'
     tgt_model_path = model_dir / tgt_model_name
 
     assert not tgt_model_path.exists(), \

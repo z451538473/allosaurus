@@ -4,6 +4,8 @@ from urllib.request import urlopen
 import io
 import argparse
 import os
+from os import path
+from frozen_path import app_path
 
 def download_model(model_name=None, alt_model_path=None):
 
@@ -12,7 +14,7 @@ def download_model(model_name=None, alt_model_path=None):
     if alt_model_path:
         model_dir = alt_model_path
     else:
-        model_dir = (Path(__file__).parent.parent) / 'pretrained'
+        model_dir = (Path(app_path()).parent) / 'pretrained'
 
     if not (model_dir / model_name).exists():
 

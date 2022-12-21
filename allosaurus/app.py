@@ -8,6 +8,7 @@ from allosaurus.bin.download_model import download_model
 from allosaurus.model import resolve_model_name, get_all_models
 from argparse import Namespace
 from io import BytesIO
+from frozen_path import app_path
 
 def read_recognizer(inference_config_or_name='latest', alt_model_path=None):
     if alt_model_path:
@@ -28,7 +29,7 @@ def read_recognizer(inference_config_or_name='latest', alt_model_path=None):
     if alt_model_path:
         model_path = alt_model_path / inference_config.model
     else:
-        model_path = Path(__file__).parent / 'pretrained' / inference_config.model
+        model_path = Path(app_path()) / 'pretrained' / inference_config.model
 
     if inference_config.model == 'latest' and not model_path.exists():
         download_model(inference_config, alt_model_path)
